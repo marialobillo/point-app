@@ -1,0 +1,35 @@
+@keyframes motivational-phrase-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes motivational-phrase-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.motivational-phrase {
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.6rem;
+  background: var(--tv-accent-lavender, #cdb8f0);
+  color: var(--tv-text, #3a3742);
+  font-size: 0.95rem;
+  animation: motivational-phrase-in 200ms ease;
+}
+
+.motivational-phrase--exiting {
+  animation: motivational-phrase-out 200ms ease forwards;
+}
