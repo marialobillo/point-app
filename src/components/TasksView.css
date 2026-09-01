@@ -1,0 +1,87 @@
+.tasks-view {
+  --tv-bg: #f7f4f9;
+  --tv-surface: #ffffff;
+  --tv-accent-lavender: #cdb8f0;
+  --tv-accent-mint: #b7e4c7;
+  --tv-text: #3a3742;
+  --tv-text-muted: #756f80;
+  --tv-error: #b5657a;
+
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--tv-bg);
+  color: var(--tv-text);
+  font-family: inherit;
+}
+
+.tasks-view__points {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: var(--tv-accent-mint);
+  color: var(--tv-text);
+  font-weight: 600;
+}
+
+.tasks-view__quick-add input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--tv-accent-lavender);
+  border-radius: 0.6rem;
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  font-size: 1rem;
+}
+
+.tasks-view__quick-add input:focus {
+  outline: 2px solid var(--tv-accent-lavender);
+  outline-offset: 1px;
+}
+
+.tasks-view__empty {
+  color: var(--tv-text-muted);
+  margin: 1rem 0;
+}
+
+.tasks-view__error {
+  color: var(--tv-error);
+  font-size: 0.9rem;
+  margin: 0.4rem 0;
+}
+
+.tasks-view__list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tasks-view__item {
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  background: var(--tv-surface);
+}
+
+.tasks-view__item-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.tasks-view__item-label input[type='checkbox'] {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--tv-accent-lavender);
+}
+
+.tasks-view__item-title--done {
+  color: var(--tv-text-muted);
+  text-decoration: line-through;
+}
