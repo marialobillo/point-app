@@ -3,12 +3,18 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import { AuthGate } from './components/AuthGate'
+import { signOut } from './lib/auth'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <AuthGate>
+      <button type="button" onClick={() => signOut()}>
+        Log out
+      </button>
+
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -115,7 +121,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </AuthGate>
   )
 }
 
