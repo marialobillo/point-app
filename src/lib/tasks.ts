@@ -10,12 +10,13 @@ export interface Task {
   task_date: string
   completed_at: string | null
   created_at: string
+  user_id: string
 }
 
 export class TaskError extends Error {
-  cause: PostgrestError
+  cause: PostgrestError | Error
 
-  constructor(message: string, cause: PostgrestError) {
+  constructor(message: string, cause: PostgrestError | Error) {
     super(message)
     this.name = 'TaskError'
     this.cause = cause
@@ -33,9 +34,21 @@ function todayLocalDate(): string {
 }
 
 export async function createTask(title: string, points: number = DEFAULT_POINTS): Promise<Task> {
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser()
+
+  if (userError) {
+    throw new TaskError(`Failed to create task: ${userError.message}`, userError)
+  }
+  if (!user) {
+    throw new TaskError('Failed to create task: no authenticated user', new Error('No authenticated user'))
+  }
+
   const { data, error } = await supabase
     .from('tasks')
-    .insert({ title, points })
+    .insert({ title, points, user_id: user.id })
     .select()
     .single()
 
