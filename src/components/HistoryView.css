@@ -1,0 +1,106 @@
+.history-view {
+  --hv-bg: #f7f4f9;
+  --hv-surface: #ffffff;
+  --hv-accent-lavender: #cdb8f0;
+  --hv-accent-mint: #b7e4c7;
+  --hv-text: #3a3742;
+  --hv-text-muted: #756f80;
+  --hv-error: #b5657a;
+
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--hv-bg);
+  color: var(--hv-text);
+  font-family: inherit;
+}
+
+.history-view__title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.history-view__empty {
+  color: var(--hv-text-muted);
+}
+
+.history-view__error {
+  color: var(--hv-error);
+}
+
+.history-view__layout {
+  display: flex;
+  gap: 1rem;
+}
+
+.history-view__days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.history-view__day-button {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.7rem;
+  background: var(--hv-surface);
+  color: var(--hv-text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.history-view__day-button--selected {
+  background: var(--hv-accent-lavender);
+}
+
+.history-view__day-detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-view__day-total {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--hv-accent-mint);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.history-view__task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.history-view__task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  background: var(--hv-surface);
+}
+
+.history-view__task-title--done {
+  color: var(--hv-text-muted);
+  text-decoration: line-through;
+}
+
+.history-view__task-points {
+  flex-shrink: 0;
+  color: var(--hv-text-muted);
+  font-size: 0.85rem;
+}
