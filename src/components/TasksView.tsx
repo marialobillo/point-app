@@ -13,7 +13,7 @@ interface ShownPhrase extends ActivePhrase {
 }
 
 export function TasksView() {
-  const { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints } =
+  const { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints, uncompleteTask } =
     useTasks()
   const [title, setTitle] = useState('')
   const [shownPhrase, setShownPhrase] = useState<ShownPhrase | null>(null)
@@ -88,8 +88,9 @@ export function TasksView() {
             <input
               type="checkbox"
               checked={task.completed}
-              disabled={task.completed}
-              onChange={() => handleComplete(task.id)}
+              // disabled={task.completed}
+              // onChange={() => handleComplete(task.id)}
+               onChange={() => (task.completed ? uncompleteTask(task.id) : handleComplete(task.id))}
               className="h-4 w-4 rounded border-ink-muted bg-bg text-mint accent-mint focus:outline-2 focus:outline-amber disabled:opacity-60"
             />
             <span className={task.completed ? 'text-ink-muted line-through' : 'text-ink'}>
