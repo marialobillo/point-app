@@ -54,55 +54,65 @@ export function TasksView() {
     .reduce((sum, t) => sum + t.points, 0)
 
   return (
-    <section className="tasks-view">
-      <div className="tasks-view__stats">
-        <div className="tasks-view__points">{points} pts today</div>
-        <div className="tasks-view__streak">{streak} day{streak === 1 ? '' : 's'} streak</div>
+    <section className="mx-auto w-full max-w-lg min-h-screen bg-bg px-6 py-12 text-ink">
+    <div className="mb-6 flex items-center justify-between">
+      <div className="text-2xl font-semibold tracking-tight text-ink">{points} pts today</div>
+      <div className="text-sm font-medium text-amber">
+        {streak} day{streak === 1 ? '' : 's'} streak
       </div>
-      <MotivationalPhrase phrase={visiblePhrase} />
+    </div>
 
-      <form className="tasks-view__quick-add" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Add a task and press Enter"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          aria-label="New task title"
-        />
-      </form>
-      {addError && <p className="tasks-view__error">{addError}</p>}
+    <MotivationalPhrase phrase={visiblePhrase} />
 
-      {loading && <p className="tasks-view__empty">Loading today's tasks…</p>}
-      {loadError && <p className="tasks-view__error">{loadError}</p>}
+    <form className="mt-6" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Add a task and press Enter"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        aria-label="New task title"
+        className="block w-full rounded-md bg-surface px-3 py-2 text-ink outline outline-1 -outline-offset-1 outline-amber/30 placeholder:text-ink-muted focus:outline-2 focus:-outline-offset-2 focus:outline-amber sm:text-sm"
+      />
+    </form>
+    {addError && <p className="mt-2 text-sm text-red-400">{addError}</p>}
 
-      {!loading && !loadError && tasks.length === 0 && (
-        <p className="tasks-view__empty">No tasks yet today.</p>
-      )}
+    {loading && <p className="mt-6 text-sm text-ink-muted">Loading today's tasks…</p>}
+    {loadError && <p className="mt-6 text-sm text-red-400">{loadError}</p>}
 
-      <ul className="tasks-view__list">
-        {tasks.map((task) => (
-          <li key={task.id} className="tasks-view__item">
-            <label className="tasks-view__item-label">
-              <input
-                type="checkbox"
-                checked={task.completed}
-                disabled={task.completed}
-                onChange={() => handleComplete(task.id)}
-              />
-              <span className={task.completed ? 'tasks-view__item-title--done' : ''}>
-                {task.title}
-              </span>
-            </label>
-            <EditablePoints
-              points={task.points}
-              onSave={(newPoints) => editPoints(task.id, newPoints)}
+    {!loading && !loadError && tasks.length === 0 && (
+      <p className="mt-6 text-sm text-ink-muted">No tasks yet today.</p>
+    )}
+
+    <ul className="mt-6 space-y-2">
+      {tasks.map((task) => (
+        <li
+          key={task.id}
+          className="flex items-center justify-between gap-3 rounded-md bg-surface px-3 py-2"
+        >
+          <label className="flex flex-1 items-center gap-3 text-sm">
+            <input
+              type="checkbox"
+              checked={task.completed}
+              disabled={task.completed}
+              onChange={() => handleComplete(task.id)}
+              className="h-4 w-4 rounded border-ink-muted bg-bg text-mint accent-mint focus:outline-2 focus:outline-amber disabled:opacity-60"
             />
-            {taskErrors[task.id] && (
-              <p className="tasks-view__error">{taskErrors[task.id]}</p>
-            )}
-          </li>
-        ))}
-      </ul>
-    </section>
+            <span className={task.completed ? 'text-ink-muted line-through' : 'text-ink'}>
+              {task.title}
+            </span>
+          </label>
+
+          <EditablePoints
+            points={task.points}
+            onSave={(newPoints) => editPoints(task.id, newPoints)}
+          />
+
+          {taskErrors[task.id] && (
+            <p className="text-xs text-red-400">{taskErrors[task.id]}</p>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
   )
 }

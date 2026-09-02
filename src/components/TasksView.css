@@ -1,4 +1,4 @@
-.tasks-view {
+/* .tasks-view {
   --tv-bg: #f7f4f9;
   --tv-surface: #ffffff;
   --tv-accent-lavender: #cdb8f0;
@@ -145,4 +145,4 @@
 .tasks-view__item-title--done {
   color: var(--tv-text-muted);
   text-decoration: line-through;
-}
+} */

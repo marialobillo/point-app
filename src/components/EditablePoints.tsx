@@ -30,33 +30,31 @@ export function EditablePoints({
 
   if (editing) {
     return (
-      <span className="editable-points">
-        <input
-          ref={inputRef}
-          type="number"
-          className="editable-points__input"
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          onBlur={commit}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault()
-              commit()
-            } else if (e.key === 'Escape') {
-              setEditing(false)
-            }
-          }}
-        />
-      </span>
+      <input
+        ref={inputRef}
+        type="number"
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            commit()
+          } else if (e.key === 'Escape') {
+            setEditing(false)
+          }
+        }}
+        className="w-16 rounded bg-bg px-2 py-1 text-sm text-ink outline outline-1 -outline-offset-1 outline-amber focus:outline-2"
+      />
     )
   }
 
   return (
     <button
       type="button"
-      className="editable-points__value"
       onClick={startEditing}
       aria-label={`Edit points, currently ${points}`}
+      className="rounded px-2 py-1 text-sm font-medium text-ink-muted hover:bg-bg hover:text-amber"
     >
       {points} pts
     </button>
