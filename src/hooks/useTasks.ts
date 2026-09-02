@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import {
   completeTask as completeTaskRequest,
   createTask,
+  editTask,
   listTodaysTasks,
   TaskError,
   type Task,
@@ -52,5 +53,26 @@ export function useTasks() {
     }
   }
 
-  return { tasks, loading, loadError, addError, taskErrors, addTask, completeTask }
+  async function editPoints(id: string, points: number) {
+    const previous = tasks
+    setTaskErrors((current) => {
+      const rest = { ...current }
+      delete rest[id]
+      return rest
+    })
+    setTasks((current) => current.map((t) => (t.id === id ? { ...t, points } : t)))
+
+    try {
+      const updated = await editTask(id, { points })
+      setTasks((current) => current.map((t) => (t.id === id ? updated : t)))
+    } catch (err) {
+      setTasks(previous)
+      setTaskErrors((current) => ({
+        ...current,
+        [id]: err instanceof TaskError ? err.message : 'Failed to edit task',
+      }))
+    }
+  }
+
+  return { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints }
 }

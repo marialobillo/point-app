@@ -25,12 +25,22 @@ export class TaskError extends Error {
 
 const DEFAULT_POINTS = 10
 
-function todayLocalDate(): string {
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
+function formatLocalDate(date: Date): string {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
+}
+
+export function todayLocalDate(): string {
+  return formatLocalDate(new Date())
+}
+
+export function lastNDaysRange(n: number): { fromDate: string; toDate: string } {
+  const today = new Date()
+  const from = new Date(today)
+  from.setDate(from.getDate() - (n - 1))
+  return { fromDate: formatLocalDate(from), toDate: formatLocalDate(today) }
 }
 
 export async function createTask(title: string, points: number = DEFAULT_POINTS): Promise<Task> {
@@ -67,6 +77,20 @@ export async function listTodaysTasks(): Promise<Task[]> {
 
   if (error) {
     throw new TaskError(`Failed to list today's tasks: ${error.message}`, error)
+  }
+
+  return (data ?? []) as Task[]
+}
+
+export async function listTasksInRange(fromDate: string, toDate: string): Promise<Task[]> {
+  const { data, error } = await supabase
+    .from('tasks')
+    .select()
+    .gte('task_date', fromDate)
+    .lte('task_date', toDate)
+
+  if (error) {
+    throw new TaskError(`Failed to list tasks in range: ${error.message}`, error)
   }
 
   return (data ?? []) as Task[]

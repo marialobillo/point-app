@@ -16,12 +16,27 @@
   font-family: inherit;
 }
 
+.tasks-view__stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 .tasks-view__points {
   display: inline-block;
-  margin-bottom: 1rem;
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
   background: var(--tv-accent-mint);
+  color: var(--tv-text);
+  font-weight: 600;
+}
+
+.tasks-view__streak {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: var(--tv-accent-lavender);
   color: var(--tv-text);
   font-weight: 600;
 }
@@ -63,9 +78,18 @@
 }
 
 .tasks-view__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
   padding: 0.6rem 0.8rem;
   border-radius: 0.6rem;
   background: var(--tv-surface);
+}
+
+.tasks-view__item .tasks-view__error {
+  flex-basis: 100%;
 }
 
 .tasks-view__item-label {
@@ -73,6 +97,43 @@
   align-items: center;
   gap: 0.6rem;
   cursor: pointer;
+  min-width: 0;
+}
+
+.editable-points__value {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  background: var(--tv-accent-mint);
+  color: var(--tv-text);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.editable-points__value:hover,
+.editable-points__value:focus-visible {
+  outline: 2px solid var(--tv-accent-lavender);
+  outline-offset: 1px;
+}
+
+.editable-points__input {
+  width: 4rem;
+  box-sizing: border-box;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--tv-accent-lavender);
+  border-radius: 0.4rem;
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.editable-points__input:focus {
+  outline: 2px solid var(--tv-accent-lavender);
+  outline-offset: 1px;
 }
 
 .tasks-view__item-label input[type='checkbox'] {

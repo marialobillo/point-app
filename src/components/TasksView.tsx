@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
+import { useStreak } from '../hooks/useStreak'
 import { useTasks } from '../hooks/useTasks'
 import { pickRandomPhrase } from '../lib/motivationalPhrases'
+import { EditablePoints } from './EditablePoints'
 import { MotivationalPhrase, type ActivePhrase } from './MotivationalPhrase'
 import './TasksView.css'
 
@@ -12,7 +14,9 @@ interface ShownPhrase extends ActivePhrase {
 }
 
 export function TasksView() {
-  const { tasks, loading, loadError, addError, taskErrors, addTask, completeTask } = useTasks()
+  const { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints } =
+    useTasks()
+  const { streak } = useStreak()
   const [title, setTitle] = useState('')
   const [shownPhrase, setShownPhrase] = useState<ShownPhrase | null>(null)
   const phraseKeyRef = useRef(0)
@@ -51,7 +55,10 @@ export function TasksView() {
 
   return (
     <section className="tasks-view">
-      <div className="tasks-view__points">{points} pts today</div>
+      <div className="tasks-view__stats">
+        <div className="tasks-view__points">{points} pts today</div>
+        <div className="tasks-view__streak">{streak} day{streak === 1 ? '' : 's'} streak</div>
+      </div>
       <MotivationalPhrase phrase={visiblePhrase} />
 
       <form className="tasks-view__quick-add" onSubmit={handleSubmit}>
@@ -86,6 +93,10 @@ export function TasksView() {
                 {task.title}
               </span>
             </label>
+            <EditablePoints
+              points={task.points}
+              onSave={(newPoints) => editPoints(task.id, newPoints)}
+            />
             {taskErrors[task.id] && (
               <p className="tasks-view__error">{taskErrors[task.id]}</p>
             )}
