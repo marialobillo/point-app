@@ -9,20 +9,46 @@ function App() {
 
   return (
     <AuthGate>
-      <button type="button" onClick={() => signOut()}>
-        Log out
-      </button>
+      <div className="min-h-screen bg-bg">
+        <header className="mx-auto flex w-full max-w-lg items-center justify-between px-6 pt-8">
+          <nav className="flex gap-1 rounded-md bg-surface p-1">
+            <button
+              type="button"
+              onClick={() => setView('today')}
+              disabled={view === 'today'}
+              className={
+                view === 'today'
+                  ? 'rounded px-3 py-1.5 text-sm font-semibold text-bg bg-mint'
+                  : 'rounded px-3 py-1.5 text-sm font-medium text-ink-muted hover:text-ink'
+              }
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              onClick={() => setView('history')}
+              disabled={view === 'history'}
+              className={
+                view === 'history'
+                  ? 'rounded px-3 py-1.5 text-sm font-semibold text-bg bg-mint'
+                  : 'rounded px-3 py-1.5 text-sm font-medium text-ink-muted hover:text-ink'
+              }
+            >
+              History
+            </button>
+          </nav>
 
-      <nav>
-        <button type="button" onClick={() => setView('today')} disabled={view === 'today'}>
-          Today
-        </button>
-        <button type="button" onClick={() => setView('history')} disabled={view === 'history'}>
-          History
-        </button>
-      </nav>
+          <button
+            type="button"
+            onClick={() => signOut()}
+            className="text-sm font-medium text-ink-muted hover:text-amber"
+          >
+            Log out
+          </button>
+        </header>
 
-      {view === 'today' ? <TasksView /> : <HistoryView />}
+        {view === 'today' ? <TasksView /> : <HistoryView />}
+      </div>
     </AuthGate>
   )
 }

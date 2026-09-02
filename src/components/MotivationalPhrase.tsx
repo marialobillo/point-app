@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import './MotivationalPhrase.css'
 
 const EXIT_DURATION_MS = 220
 
@@ -33,8 +32,12 @@ export function MotivationalPhrase({ phrase }: { phrase: ActivePhrase | null }) 
   return (
     <div
       key={displayedKey}
-      className={`motivational-phrase${!phrase ? ' motivational-phrase--exiting' : ''}`}
       role="status"
+      className={
+        phrase
+          ? 'mt-4 animate-phrase-in rounded-md bg-mint px-3 py-2 text-sm font-medium text-bg'
+          : 'mt-4 rounded-md bg-mint px-3 py-2 text-sm font-medium text-bg opacity-0 transition-all duration-[220ms] ease-out -translate-y-1'
+      }
     >
       {displayedText}
     </div>
