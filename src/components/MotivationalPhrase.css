@@ -1,4 +1,4 @@
-@keyframes motivational-phrase-in {
+/* @keyframes motivational-phrase-in {
   from {
     opacity: 0;
     transform: translateY(-4px);
@@ -32,4 +32,4 @@
 
 .motivational-phrase--exiting {
   animation: motivational-phrase-out 200ms ease forwards;
-}
+} */
