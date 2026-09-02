@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { AuthGate } from './components/AuthGate'
 import { HistoryView } from './components/HistoryView'
+import { StatsView } from './components/StatsView'
 import { TasksView } from './components/TasksView'
 import { signOut } from './lib/auth'
 
 function App() {
-  const [view, setView] = useState<'today' | 'history'>('today')
+  const [view, setView] = useState<'today' | 'history' | 'stats'>('today')
 
   return (
     <AuthGate>
@@ -36,6 +37,18 @@ function App() {
             >
               History
             </button>
+            <button
+              type="button"
+              onClick={() => setView('stats')}
+              disabled={view === 'stats'}
+              className={
+                view === 'stats'
+                  ? 'rounded px-3 py-1.5 text-sm font-semibold text-bg bg-mint'
+                  : 'rounded px-3 py-1.5 text-sm font-medium text-ink-muted hover:text-ink'
+              }
+            >
+              Stats
+            </button>
           </nav>
 
           <button
@@ -47,7 +60,9 @@ function App() {
           </button>
         </header>
 
-        {view === 'today' ? <TasksView /> : <HistoryView />}
+        {view === 'today' && <TasksView />}
+        {view === 'history' && <HistoryView />}
+        {view === 'stats' && <StatsView />}
       </div>
     </AuthGate>
   )

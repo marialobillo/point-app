@@ -43,6 +43,24 @@ export function lastNDaysRange(n: number): { fromDate: string; toDate: string } 
   return { fromDate: formatLocalDate(from), toDate: formatLocalDate(today) }
 }
 
+export type StatsPeriod = 'week' | 'month' | 'year'
+
+function daysInCurrentMonth(): number {
+  const today = new Date()
+  return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+}
+
+export function periodRange(period: StatsPeriod): { fromDate: string; toDate: string } {
+  switch (period) {
+    case 'week':
+      return lastNDaysRange(7)
+    case 'month':
+      return lastNDaysRange(daysInCurrentMonth())
+    case 'year':
+      return lastNDaysRange(365)
+  }
+}
+
 export async function createTask(title: string, points: number = DEFAULT_POINTS): Promise<Task> {
   const {
     data: { user },
@@ -135,4 +153,16 @@ export async function deleteTask(id: string): Promise<void> {
   if (error) {
     throw new TaskError(`Failed to delete task ${id}: ${error.message}`, error)
   }
+}
+
+export async function unCompleteTask(id: string): Promise<Task> {
+  const { data, error } = await supabase
+    .from('tasks')
+    .update({ completed: false, completed_at: null })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) throw new TaskError(error.message, error)
+  return data
 }

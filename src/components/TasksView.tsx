@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { useStreak } from '../hooks/useStreak'
 import { useTasks } from '../hooks/useTasks'
 import { pickRandomPhrase } from '../lib/motivationalPhrases'
 import { EditablePoints } from './EditablePoints'
@@ -14,9 +13,8 @@ interface ShownPhrase extends ActivePhrase {
 }
 
 export function TasksView() {
-  const { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints } =
+  const { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints, uncompleteTask } =
     useTasks()
-  const { streak } = useStreak()
   const [title, setTitle] = useState('')
   const [shownPhrase, setShownPhrase] = useState<ShownPhrase | null>(null)
   const phraseKeyRef = useRef(0)
@@ -57,9 +55,6 @@ export function TasksView() {
     <section className="mx-auto w-full max-w-lg min-h-screen bg-bg px-6 py-12 text-ink">
     <div className="mb-6 flex items-center justify-between">
       <div className="text-2xl font-semibold tracking-tight text-ink">{points} pts today</div>
-      <div className="text-sm font-medium text-amber">
-        {streak} day{streak === 1 ? '' : 's'} streak
-      </div>
     </div>
 
     <MotivationalPhrase phrase={visiblePhrase} />
@@ -93,8 +88,9 @@ export function TasksView() {
             <input
               type="checkbox"
               checked={task.completed}
-              disabled={task.completed}
-              onChange={() => handleComplete(task.id)}
+              // disabled={task.completed}
+              // onChange={() => handleComplete(task.id)}
+               onChange={() => (task.completed ? uncompleteTask(task.id) : handleComplete(task.id))}
               className="h-4 w-4 rounded border-ink-muted bg-bg text-mint accent-mint focus:outline-2 focus:outline-amber disabled:opacity-60"
             />
             <span className={task.completed ? 'text-ink-muted line-through' : 'text-ink'}>

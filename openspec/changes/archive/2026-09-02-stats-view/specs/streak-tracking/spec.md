@@ -1,13 +1,8 @@
-# streak-tracking Specification
-
-## Purpose
-
-Gives the user a sense of momentum: how many days in a row they've gotten at least one task done, shown alongside today's points so it's visible without navigating anywhere.
-
-## Requirements
+## REMOVED Requirements
 
 ### Requirement: Current streak calculation
-The system SHALL compute the current streak as the number of consecutive days, ending at today or yesterday, on which the signed-in user completed at least one task.
+**Reason**: The daily-streak framing is being dropped in favor of period totals (see `task-stats`), which give a progress overview without pressure to avoid breaking a chain.
+**Migration**: No replacement value is computed. Consumers previously reading the streak (e.g. `TasksView`) should remove that display; users who want a sense of progress can use the new Stats tab instead.
 
 #### Scenario: Streak includes today
 - **WHEN** today has at least one completed task, and the immediately preceding N-1 days also each have at least one completed task with no gap
@@ -26,7 +21,8 @@ The system SHALL compute the current streak as the number of consecutive days, e
 - **THEN** the current streak SHALL be 0
 
 ### Requirement: Display current streak
-The system SHALL display the current streak count in the today view, visible alongside the daily points counter.
+**Reason**: The streak is no longer computed, so it has nothing left to display.
+**Migration**: Remove the streak display from the today view; no replacement UI element is required there.
 
 #### Scenario: Streak is visible
 - **WHEN** the today view is rendered
