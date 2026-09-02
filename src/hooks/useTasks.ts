@@ -5,6 +5,7 @@ import {
   editTask,
   listTodaysTasks,
   TaskError,
+  unCompleteTask,
   type Task,
 } from '../lib/tasks'
 
@@ -53,6 +54,25 @@ export function useTasks() {
     }
   }
 
+  async function uncompleteTask(id: string) {
+    const prevTask = tasks.find((t) => t.id === id)
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, completed: false, completed_at: null } : t))
+    )
+    try {
+      const updated = await unCompleteTask(id)
+      setTasks((prev) => prev.map((t) => (t.id === id ? updated : t)))
+    } catch (err) {
+      if (prevTask) {
+        setTasks((prev) => prev.map((t) => (t.id === id ? prevTask : t)))
+      }
+      setTaskErrors((prev) => ({
+        ...prev,
+        [id]: err instanceof TaskError ? err.message : 'Something went wrong',
+      }))
+    }
+  }
+
   async function editPoints(id: string, points: number) {
     const previous = tasks
     setTaskErrors((current) => {
@@ -74,5 +94,6 @@ export function useTasks() {
     }
   }
 
-  return { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints }
+  return { tasks, loading, loadError, addError, taskErrors, addTask, completeTask, editPoints, uncompleteTask }
 }
+

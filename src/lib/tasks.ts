@@ -155,7 +155,7 @@ export async function deleteTask(id: string): Promise<void> {
   }
 }
 
-export async function uncompleteTask(id: string): Promise<Task> {
+export async function unCompleteTask(id: string): Promise<Task> {
   const { data, error } = await supabase
     .from('tasks')
     .update({ completed: false, completed_at: null })
